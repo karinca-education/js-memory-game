@@ -1,5 +1,4 @@
 const game = document.querySelector(".game");
-
 const gameCard = document.querySelectorAll(".game-card");
 
 const animals = [
@@ -228,14 +227,12 @@ const animals = [
   "Yak",
   "Zebra",
 ];
-const level = 2;
+const level = 3;
 const cardCounter = level * 2;
 
-var cards = [];
-
-var gameCartHTML = ``;
 var clickCounter = 0;
 var clickArray = [];
+var covers = [];
 
 const getSessionAnimals = (quantity) => {
   const sessionAnimals = [];
@@ -280,8 +277,8 @@ const generateGameCard = (cardQuantity) => {
     var value = gameAnimals[i];
     game.innerHTML += `
     <div class="card-game-inner">
-    <button class="game-card ${value}  "  onclick="clickDetect('${value}',' ${i}')"><span class="card-content">${value}</span></button>
-    <button class="game-card ${value} ${i} cover "  onclick="clickDetect('${value}', '${i}')"><span class="card-content"></span></button>
+        <button class="game-card ${value}  "  onclick="clickDetect('${value}',' ${i}')"><span class="card-content">${value}</span></button>
+        <button class="game-card ${value} ${i} cover "  onclick="clickDetect('${value}', '${i}')"><span class="card-content"></span></button>
     </div>
     `;
   }
@@ -291,6 +288,9 @@ generateGameCard(cardCounter);
 
 const clickDetect = (content, index) => {
   const cover = document.getElementsByClassName(index)[0];
+
+  covers.push(cover);
+
   cover.style.display = "none";
   clickCounter++;
   clickArray.push(content);
@@ -302,8 +302,15 @@ const clickDetect = (content, index) => {
       for (let item of buttons) {
         item.disabled = true;
       }
+      covers = [];
     } else {
-      cover.style.display = "block";
+      setTimeout(() => {
+        for (let cv of covers) {
+          cv.style.display = "block";
+          cv.style.top = "0px";
+        }
+        covers = [];
+      }, 1000);
     }
     clickCounter = 0;
     clickArray = [];

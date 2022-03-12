@@ -52,8 +52,9 @@ body {
 
 button:disabled,
 button[disabled] {
-  background-color: red;
+  background-color: #212121;
   cursor: not-allowed;
+  color: #bebebe;
 }
 
 .cover {

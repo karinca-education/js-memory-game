@@ -233,6 +233,7 @@ const cardCounter = level * 2;
 var clickCounter = 0;
 var clickArray = [];
 var covers = [];
+var oneClickDisabled = [];
 
 const getSessionAnimals = (quantity) => {
   const sessionAnimals = [];
@@ -277,7 +278,7 @@ const generateGameCard = (cardQuantity) => {
     var value = gameAnimals[i];
     game.innerHTML += `
     <div class="card-game-inner">
-        <button class="game-card ${value}  "  onclick="clickDetect('${value}',' ${i}')"><span class="card-content">${value}</span></button>
+        <button class="game-card ${value}  ${value}${i}  "  onclick="clickDetect('${value}',' ${i}')"><span class="card-content">${value}</span></button>
         <button class="game-card ${value} ${i} cover "  onclick="clickDetect('${value}', '${i}')"><span class="card-content"></span></button>
     </div>
     `;
@@ -288,7 +289,7 @@ generateGameCard(cardCounter);
 
 const clickDetect = (content, index) => {
   const cover = document.getElementsByClassName(index)[0];
-
+  console.log(cover);
   covers.push(cover);
 
   cover.style.display = "none";
@@ -301,6 +302,7 @@ const clickDetect = (content, index) => {
 
       for (let item of buttons) {
         item.disabled = true;
+        item.classList.add("true");
       }
       covers = [];
     } else {
@@ -309,14 +311,22 @@ const clickDetect = (content, index) => {
           cv.style.display = "block";
           cv.style.top = "0px";
         }
+        for (let btn of oneClickDisabled) {
+          btn.disabled = false;
+        }
         covers = [];
       }, 1000);
     }
     clickCounter = 0;
     clickArray = [];
   } else {
-    console.log(clickCounter);
+    var classes = cover.className.split(" ");
+    var contentButtonClass = classes[1] + classes[2];
+
+    const contentButton =
+      document.getElementsByClassName(contentButtonClass)[0];
+    oneClickDisabled.push(contentButton);
+    //console.log(contentButton);
+    contentButton.disabled = true;
   }
 };
-
-// BUG --> aynı karta iki kez tıklanamamalı

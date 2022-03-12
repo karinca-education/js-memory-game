@@ -62,3 +62,8 @@ button[disabled] {
   z-index: 1;
   left: 0;
 }
+.true {
+  background-color: #212121;
+  cursor: not-allowed;
+  color: #bebebe;
+}
